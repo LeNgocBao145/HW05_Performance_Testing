@@ -10,10 +10,6 @@ const users = new SharedArray('users', function() {
     }).filter(u => u.email);
 });
 
-const products = new SharedArray('products', function() {
-    return open('./products.csv').split('\n').slice(1).map(line => line.trim()).filter(id => id);
-});
-
 export const options = {
   stages: [
     { duration: '10s', target: 200 },
@@ -26,7 +22,6 @@ const BASE_URL = 'http://localhost:3000/api';
 
 export default function () {
   const user = users[Math.floor(Math.random() * users.length)];
-  const product_id = products[Math.floor(Math.random() * products.length)];
 
   const loginRes = http.post(`${BASE_URL}/login`, JSON.stringify({
     email: user.email,
@@ -48,6 +43,16 @@ export default function () {
 
   const productsRes = http.get(`${BASE_URL}/products`);
   check(productsRes, { 'viewed products': (r) => r.status === 200 });
+
+  let product_id = 1;
+  if (productsRes.status === 200) {
+      try {
+          let body = productsRes.json();
+          if (body && body.length > 0) {
+              product_id = body[Math.floor(Math.random() * body.length)].id;
+          }
+      } catch (e) {}
+  }
 
   sleep(1);
 

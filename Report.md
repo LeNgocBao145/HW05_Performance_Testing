@@ -14,10 +14,9 @@ This journey perfectly covers all three mandatory endpoint groups and matches th
 *   **Transactional:** Add to Cart (`POST /api/cart`) and Checkout (`POST /api/checkout`). Exercises write operations, data integrity, and automated total calculation.
 
 ### 2. Data-Driven Strategy
-To make the tests realistic and avoid database caching, the scripts will use the following CSV datasets:
-*   **`users.csv`**: Contains `email` and `password` for valid accounts to simulate different users logging in, and potentially trigger lockout behavior during stress/spike tests.
-*   **`products.csv`**: Contains `product_id` to randomly select items to view and add to cart.
-
+To make the tests realistic and avoid database caching, the test data is handled as follows:
+*   **`users.csv`**: Contains `email` and `password` for valid accounts to simulate different users logging in. (Requires a one-off script to seed 200 users before the test, and a teardown step to clean them up after the test).
+*   **Dynamic Data Correlation (Products)**: Instead of a static `products.csv`, the script dynamically fetches the available products via `GET /api/products` and randomly selects a valid Product ID during runtime for the Add to Cart step.
 ### 3. Load Shapes and SLOs
 The test will evaluate the system under three different profiles using k6. 
 *Note: The system requirements (README.md) did not specify explicit Non-Functional Requirements, so these numbers are chosen based on industry standard heuristics for a small-scale Node.js/SQLite application.*
@@ -36,7 +35,7 @@ The test will evaluate the system under three different profiles using k6.
 The k6 scripts and CSV datasets have been generated.
 
 **Files Created:**
-- `users.csv`, `products.csv`: Data-driven datasets for Login and Add to Cart.
+- `users.csv`: Data-driven dataset for Login.
 - `23127155_Load_20260814.js`: Load scenario. **Listener/View Type:** JSON Summary Report (`summary.json`).
 - `23127155_Stress_20260814.js`: Stress scenario. **Listener/View Type:** HTML Dashboard Report (`summary.html`).
 - `23127155_Spike_20260814.js`: Spike scenario. **Listener/View Type:** Textual standard output Report (`summary.txt`).
@@ -46,5 +45,9 @@ The k6 scripts and CSV datasets have been generated.
 > **How to reset between runs:** You must wait at least 30 seconds for the temporary lockout to expire naturally, or restart the `node server.js` process to clear in-memory states before starting the next test scenario.
 
 ## Human Review Notes (Step 2 Correction)
-*   **What was wrong:** The AI initially generated `users.csv` with only 2 accounts (including 1 admin which is invalid for a buyer checkout flow), which is insufficient for 200 VUs. Sharing 1 regular account across 200 VUs would cause severe data conflicts and race conditions (cart sharing) during Transactional endpoints.
+*   **What was wrong (Users Data):** The AI initially generated `users.csv` with only 2 accounts (including 1 admin which is invalid for a buyer checkout flow), which is insufficient for 200 VUs. Sharing 1 regular account across 200 VUs would cause severe data conflicts and race conditions (cart sharing) during Transactional endpoints.
 *   **Why it missed (Classification):** **Endpoint characteristic** / **Model limitation**. The AI directly copied the two default accounts from `README.md` without considering that transactional endpoints (Cart/Checkout) are tied to individual user sessions. A proper test requires a dataset of unique user accounts matching the number of concurrent VUs.
+*   **What was missing (Teardown):** The AI did not advise tearing down (cleaning up) the 200 seeded users after the test run.
+*   **Why it missed (Classification):** **Model limitation**. The AI focused only on data preparation but missed the Test Data Management best practice of restoring the environment to its initial state to prevent database bloat.
+*   **What was wrong (Static Products):** The AI originally used a static `products.csv` for product IDs.
+*   **Why it missed (Classification):** **Model limitation**. The AI generated a static CSV to fulfill the prompt's instruction blindly, rather than applying the best practice of Dynamic Data Correlation (fetching available IDs at runtime) to prevent 404 errors if product records change.
