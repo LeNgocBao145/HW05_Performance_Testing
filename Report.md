@@ -44,3 +44,7 @@ The k6 scripts and CSV datasets have been generated.
 > [!WARNING]
 > **Account Lockout Reset (FR-02):** The backend locks an account for 30 seconds after 3 failed login attempts. During Stress and Spike tests, high traffic might trigger this lockout if invalid combinations happen.
 > **How to reset between runs:** You must wait at least 30 seconds for the temporary lockout to expire naturally, or restart the `node server.js` process to clear in-memory states before starting the next test scenario.
+
+## Human Review Notes (Step 2 Correction)
+*   **What was wrong:** The AI initially generated `users.csv` with only 2 accounts (including 1 admin which is invalid for a buyer checkout flow), which is insufficient for 200 VUs. Sharing 1 regular account across 200 VUs would cause severe data conflicts and race conditions (cart sharing) during Transactional endpoints.
+*   **Why it missed (Classification):** **Endpoint characteristic** / **Model limitation**. The AI directly copied the two default accounts from `README.md` without considering that transactional endpoints (Cart/Checkout) are tied to individual user sessions. A proper test requires a dataset of unique user accounts matching the number of concurrent VUs.
