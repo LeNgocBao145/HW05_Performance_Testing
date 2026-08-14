@@ -1,0 +1,82 @@
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+import { SharedArray } from 'k6/data';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
+
+const users = new SharedArray('users', function() {
+    return open('./users.csv').split('\n').slice(1).map(line => {
+        let cols = line.split(',');
+        return { email: cols[0], password: cols[1] };
+    }).filter(u => u.email);
+});
+
+const products = new SharedArray('products', function() {
+    return open('./products.csv').split('\n').slice(1).map(line => line.trim()).filter(id => id);
+});
+
+export const options = {
+  stages: [
+    { duration: '30s', target: 20 },
+    { duration: '3m', target: 20 },
+    { duration: '10s', target: 0 },
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)<500'],
+    http_req_failed: ['rate<0.01'],
+  },
+};
+
+const BASE_URL = 'http://localhost:3000/api';
+
+export default function () {
+  const user = users[Math.floor(Math.random() * users.length)];
+  const product_id = products[Math.floor(Math.random() * products.length)];
+
+  const loginRes = http.post(`${BASE_URL}/login`, JSON.stringify({
+    email: user.email,
+    password: user.password
+  }), { headers: { 'Content-Type': 'application/json' } });
+  
+  check(loginRes, { 'login successful': (r) => r.status === 200 });
+  
+  let token = null;
+  if (loginRes.status === 200) {
+    token = loginRes.json('token');
+  }
+  const authHeaders = { 
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}` 
+  };
+
+  sleep(1);
+
+  const productsRes = http.get(`${BASE_URL}/products`);
+  check(productsRes, { 'viewed products': (r) => r.status === 200 });
+
+  sleep(1);
+
+  if (token) {
+    const cartRes = http.post(`${BASE_URL}/cart`, JSON.stringify({
+      id: parseInt(product_id),
+      name: `Product ${product_id}`,
+      price: 100000,
+      quantity: 1
+    }), { headers: authHeaders });
+    check(cartRes, { 'added to cart': (r) => r.status === 200 || r.status === 201 });
+
+    sleep(1);
+
+    const checkoutRes = http.post(`${BASE_URL}/checkout`, JSON.stringify({
+      total_amount: 100000,
+      shipping_address: "123 Test St"
+    }), { headers: authHeaders });
+    check(checkoutRes, { 'checkout successful': (r) => r.status === 200 || r.status === 201 });
+  }
+}
+
+export function handleSummary(data) {
+  return {
+    'stdout': textSummary(data, { indent: ' ', enableColors: true }),
+    '23127155_Load_20260814_summary.json': JSON.stringify(data),
+  };
+}

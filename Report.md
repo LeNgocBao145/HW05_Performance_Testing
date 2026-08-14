@@ -31,3 +31,16 @@ The test will evaluate the system under three different profiles using k6.
 | **Load** | 20 | 30s | 3m | Normal expected traffic. Validates system behaves well under typical conditions. | 95th percentile response time < 500ms, Error rate < 1%. |
 | **Stress** | 100 | 1m | 5m | Peak/abnormal capacity. Identifies memory leaks, DB bottlenecks, or the breaking point. | 95th percentile response time < 1000ms, Error rate < 5%. |
 | **Spike** | 200 | 10s | 1m | Sudden traffic surge (e.g., flash sale). Ensures system does not permanently crash and can recover. | System doesn't crash, graceful degradation. |
+
+## Task 1: Script Generation
+The k6 scripts and CSV datasets have been generated.
+
+**Files Created:**
+- `users.csv`, `products.csv`: Data-driven datasets for Login and Add to Cart.
+- `23127155_Load_20260814.js`: Load scenario. **Listener/View Type:** JSON Summary Report (`summary.json`).
+- `23127155_Stress_20260814.js`: Stress scenario. **Listener/View Type:** HTML Dashboard Report (`summary.html`).
+- `23127155_Spike_20260814.js`: Spike scenario. **Listener/View Type:** Textual standard output Report (`summary.txt`).
+
+> [!WARNING]
+> **Account Lockout Reset (FR-02):** The backend locks an account for 30 seconds after 3 failed login attempts. During Stress and Spike tests, high traffic might trigger this lockout if invalid combinations happen.
+> **How to reset between runs:** You must wait at least 30 seconds for the temporary lockout to expire naturally, or restart the `node server.js` process to clear in-memory states before starting the next test scenario.
