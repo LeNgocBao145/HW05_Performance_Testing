@@ -47,10 +47,10 @@ Only then apply the correction and proceed.
 
 ---
 
-### Step 2 — Tune
+### Step 2 — Tune (Judge the AI's recommendations)
 
 **What to do:**
-- Based on Step 5, propose 2-3 specific structural optimizations (e.g., missing index, N+1 queries, connection pool sizing, SQLite WAL).
+- **Judge the AI's recommendations:** Propose a comprehensive list of structural optimizations that are highly feasible and strictly suitable for the system context.
 - Wait for the user to classify each proposal as **feasible** or **hallucinated**, with their reasoning, and record it verbatim in `Report.md`.
 - Propose a **Continuous Performance Testing** model (Task 3, Bloom-AI G9.6) matching their setup (e.g., PR smoke test, nightly soak, commit-triggered p95 regression gate). This must include:
   - A **flow chart** (produce it as a Mermaid diagram in `Report.md`) showing: commit event -> decision on whether to run perf tests -> test execution -> p95 comparison against baseline -> pass/flag regression.
