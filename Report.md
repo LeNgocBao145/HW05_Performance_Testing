@@ -381,52 +381,11 @@ The `previous_baseline_*` fields provide a single-level undo. For deeper history
 > **🚨 IMPORTANT:**
 > **Local vs. CI variance:** Developers should **not** use locally-run test results to manually set the baseline. Local machines (e.g., our i7-13650HX with 32 GB RAM) have vastly different performance characteristics than CI runners (typically 2-core, 7 GB RAM). The baseline must always be established by the CI runner itself to ensure consistency.
 
+<div style="page-break-before: always;"></div>
+
 ### 3. Flow Chart
 
-```mermaid
-flowchart TD
-    A["Developer Push Code /<br/>Create PR"] --> B["CI Pipeline Triggered"]
-    B --> C{"Trigger Decision Engine<br/>Check Changed Files /<br/>Event Type"}
-
-    C -- "Docs / Frontend CSS only" --> D["Skip Perf Test /<br/>Run Lint only"]
-
-    C -- "PR with Backend/DB Changes" --> E["Deploy to Ephemeral /<br/>Staging Environment"]
-    E --> F["Run Smoke Load Test<br/>e.g., 20 VUs — 1 min in CI"]
-
-    C -- "Nightly Schedule" --> G["Run Full Load & Soak Test<br/>e.g., Expected Peak — 2h"]
-    C -- "Release Tag" --> H["Run Stress &<br/>Breakpoint Test"]
-
-    F --> I["Collect Metrics:<br/>p95, p99, Error Rate,<br/>Throughput"]
-    G --> I
-    H --> I
-
-    I --> J{"Evaluate Gates & Baseline<br/>p95 < SLO &<br/>Error Rate < 1% ?"}
-
-    J -- "YES (Pass)" --> K["Save Run as Baseline /<br/>Report to Grafana"]
-    K --> L["Approve & Allow<br/>Merge PR / Deploy"]
-
-    J -- "NO (Regressed / Breach SLO)" --> O{"Flaky Retry:<br/>Re-run test once"}
-
-    O -- "Retry also regressed" --> M["Flag p95 Regression<br/>& Fail Build"]
-    M --> N["Block PR & Send Alert<br/>to Slack / GitHub Issue<br/>with APM Traces"]
-
-    O -- "Retry passed<br/>(was flaky)" --> P["Mark as Flaky Warning<br/>Allow merge but<br/>flag for review"]
-
-    style A fill:#4A90D9,stroke:#2C5F8A,color:#fff
-    style B fill:#5DADE2,stroke:#2E86C1,color:#fff
-    style D fill:#95A5A6,stroke:#7F8C8D,color:#fff
-    style E fill:#3498DB,stroke:#2980B9,color:#fff
-    style F fill:#E67E22,stroke:#D35400,color:#fff
-    style G fill:#E67E22,stroke:#D35400,color:#fff
-    style H fill:#E74C3C,stroke:#C0392B,color:#fff
-    style I fill:#9B59B6,stroke:#8E44AD,color:#fff
-    style K fill:#27AE60,stroke:#1E8449,color:#fff
-    style L fill:#2ECC71,stroke:#27AE60,color:#fff
-    style O fill:#F39C12,stroke:#E67E22,color:#fff
-    style M fill:#E74C3C,stroke:#C0392B,color:#fff
-    style N fill:#C0392B,stroke:#922B21,color:#fff
-    style P fill:#F39C12,stroke:#D68910,color:#fff
-```
+![Continuous Testing Flowchart](images/continuous_testing_flowchart.png)
 
 #### Flaky Retry Protocol
 
