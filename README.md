@@ -1,3 +1,5 @@
+> **Note:** This project follows the requirements of `2026.HW05.Performance Testing_En_2.0_HTThanh`.
+
 | No. | Criteria | Grade | Self-Assessed Grade |
 |-----|----------|-------|---------------------|
 | 1 | Task 1 — Load testing | 20 | 20 |

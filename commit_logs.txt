@@ -1,1 +1,161 @@
-git log --graph --all --stat
+* commit 04d9548e5e8ffa8d6312ce9c17cf36a91f2db2cf
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 22:01:04 2026 +0700
+| 
+|     docs: add AI Audit Report
+| 
+|  AI_Audit_Report.md | 1409 +++++++++++++++++++++++++++++++++++++++++++++++++-
+|  prompt_logs.md     | 1351 ++++++++++++++++++++++++++++++++++++++++++++++-
+|  2 files changed, 2757 insertions(+), 3 deletions(-)
+| 
+* commit 1babe463e68ca1a7bf788cff3418146c8733b0d8
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 21:45:57 2026 +0700
+| 
+|     docs: AI Audit Report
+| 
+|  AI_Critique.md             | 30 +++++++++++++++++++++++++++++-
+|  gitHub_repository_link.txt |  1 +
+|  2 files changed, 30 insertions(+), 1 deletion(-)
+| 
+* commit 4c8edc85676cde73aca68c2fc44584cb1c42520f
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:37:58 2026 +0700
+| 
+|     docs: self-assessment table (below) and a test
+|     summary report: scenarios run; endpoint groups covered; the
+|     endurance threshold (with numbers); number of bugs / performance
+|     issues; and the demo video link
+| 
+|  README.md                            | 28 +++++++++++++++++++++-------
+|  agent_skill_video_demo_link.txt      |  1 +
+|  unlisted_youtube_demo_video_link.txt |  3 +++
+|  3 files changed, 25 insertions(+), 7 deletions(-)
+| 
+* commit 29ad2bc6ba22bfb09ca818158aa105ed6e9b64bd
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:35:28 2026 +0700
+| 
+|     docs: performance-testing report and my AI-analysis critique
+| 
+|  Report.md              | 560 ++++++++++++++++++++++++++++++++++++++++++++++-
+|  images/dxdiag.png      | Bin 0 -> 55871 bytes
+|  images/load_test.png   | Bin 0 -> 96733 bytes
+|  images/spike_test.png  | Bin 0 -> 98046 bytes
+|  images/stress_test.png | Bin 0 -> 99384 bytes
+|  5 files changed, 556 insertions(+), 4 deletions(-)
+| 
+* commit b0bf00e4f101a35d6a07e803aeded5a65dec3ecd
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:34:23 2026 +0700
+| 
+|     feat:  three different report views + HTML reports
+| 
+|  reports/23127155_Load_20260814_report.html    | 876 ++++++++++++++++++++++++
+|  reports/23127155_Load_20260814_summary.json   |   1 +
+|  reports/23127155_Spike_20260814_report.html   | 876 ++++++++++++++++++++++++
+|  reports/23127155_Spike_20260814_summary.txt   |  23 +
+|  reports/23127155_Stress_20260814_summary.html | 876 ++++++++++++++++++++++++
+|  5 files changed, 2652 insertions(+)
+| 
+* commit 28dd67c5b32ef02ba0b6350aac0c64b0b2849224
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:33:09 2026 +0700
+| 
+|     feat:  three test plans Load, Stress, and Spike.
+| 
+|  test_plans/23127155_Endurance_20260814.js |  90 +++++++++++++
+|  test_plans/23127155_Load_20260814.js      |  92 +++++++++++++
+|  test_plans/23127155_Spike_20260814.js     |  87 ++++++++++++
+|  test_plans/23127155_Stress_20260814.js    |  90 +++++++++++++
+|  test_plans/users.csv                      | 201 ++++++++++++++++++++++++++++
+|  5 files changed, 560 insertions(+)
+| 
+* commit 9773b4e1dd7ee27ed0866e68af447bd96fd8a2f2
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:32:06 2026 +0700
+| 
+|     feat: raw logs of load, stress, spike scenarios
+| 
+|  raw_logs/23127155_Load_raw.csv   |  59933 +++++
+|  raw_logs/23127155_Spike_raw.csv  | 158383 +++++++++++++
+|  raw_logs/23127155_Stress_raw.csv | 434770 ++++++++++++++++++++++++++++++++++
+|  3 files changed, 653086 insertions(+)
+| 
+* commit dde7bbab46c90957f8d96f97b73b27a6cd4cf4c1
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Mon Aug 17 20:31:03 2026 +0700
+| 
+|     feat: update log analysis agent skill
+| 
+|  .github/skills/log-analysis/SKILL.md | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+| 
+* commit d7eb85180ee769f55f8561e1595b0486cad34236
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Fri Aug 14 11:37:28 2026 +0700
+| 
+|     test(perf): apply dynamic data correlation and teardown notes
+| 
+|  23127155_Load_20260814.js   | 15 ++++++++++-----
+|  23127155_Spike_20260814.js  | 15 ++++++++++-----
+|  23127155_Stress_20260814.js | 15 ++++++++++-----
+|  Report.md                   | 15 +++++++++------
+|  4 files changed, 39 insertions(+), 21 deletions(-)
+| 
+* commit a04a3df22a3feeeaf403980967245cf70801bc1e
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Fri Aug 14 11:22:59 2026 +0700
+| 
+|     test(perf): apply correction to users.csv for 200 VUs and update Human Review Notes
+| 
+|  Report.md |   4 ++
+|  users.csv | 202 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+|  2 files changed, 204 insertions(+), 2 deletions(-)
+| 
+* commit b84995c5cfb3cdd5f4094db04045eda03c08b395
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Fri Aug 14 11:11:02 2026 +0700
+| 
+|     test(perf): Step 2 - generate JMeter/k6 scripts and CSV templates
+| 
+|  .github/skills/ai-audit-report/SKILL.md           |  44 +++++
+|  .../ai-audit-report/scripts/generate_report.py    | 191 ++++++++++++++++++
+|  .github/skills/log-analysis/SKILL.md              |  62 ++++++
+|  .github/skills/performance-testing/SKILL.md       | 104 ++++++++++
+|  2026.HW05.Performance Testing_En.md               | 205 ++++++++++++++++++++
+|  23127155_Load_20260814.js                         |  82 ++++++++
+|  23127155_Spike_20260814.js                        |  77 ++++++++
+|  23127155_Stress_20260814.js                       |  81 ++++++++
+|  AI_Audit_Report.md                                |  63 ++++++
+|  AI_Critique.md                                    |  22 +++
+|  Bug_Report.md                                     |   0
+|  README.md                                         |  10 +-
+|  Report.md                                         |  13 ++
+|  agent_skill_video_demo_link.txt                   |   0
+|  commit_logs.txt                                   |   1 +
+|  gitHub_repository_link.txt                        |   0
+|  products.csv                                      |   6 +
+|  prompt_logs.md                                    |  13 ++
+|  signature.png                                     | Bin 0 -> 1955 bytes
+|  unlisted_youtube_demo_video_link.txt              |   0
+|  users.csv                                         |   3 +
+|  21 files changed, 976 insertions(+), 1 deletion(-)
+| 
+* commit 7b095ee8155f6778e8f205776c351495b01b299a
+| Author: LeNgocBao145 <23127155@student.hcmus.edu.vn>
+| Date:   Fri Aug 14 11:01:11 2026 +0700
+| 
+|     test(perf): Step 1 - model workload and SLOs for 3 endpoint groups
+| 
+|  Report.md | 33 +++++++++++++++++++++++++++++++++
+|  1 file changed, 33 insertions(+)
+| 
+* commit 3a7d2aa376f63090a6d511fced3582d61aa12bbe
+  Author: LE DUC NGOC BAO <147987387+LeNgocBao145@users.noreply.github.com>
+  Date:   Wed Aug 5 19:09:09 2026 +0700
+  
+      Initial commit
+  
+   README.md | 1 +
+   1 file changed, 1 insertion(+)
